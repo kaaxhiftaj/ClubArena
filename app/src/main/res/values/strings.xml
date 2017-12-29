@@ -10,4 +10,6 @@
     <string name="user_name">USER NAME</string>
     <string name="no_account_yet">NO ACCOUNT YET?</string>
     <string name="already_have_account">ALREADY HAVE AN ACCOUNT?</string>
+    <string name="use_my_location">USE MY CURRENT LOCATION</string>
+    <string name="find_clubs">FIND CLUBS NEAR YOU</string>
 </resources>

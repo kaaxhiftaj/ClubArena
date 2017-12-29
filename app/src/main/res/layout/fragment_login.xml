@@ -31,6 +31,7 @@
                 card_view:cardPreventCornerOverlap="true"
                 card_view:cardUseCompatPadding="true"
                 >
+
     <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -46,13 +47,12 @@
                     android:layout_marginTop="10dp"
                     android:textStyle="bold" />
 
-
                 <EditText
-                    android:id="@+id/etEmailSignUp"
+                    android:id="@+id/et_email_signin"
                     android:layout_width="260sp"
                     android:layout_height="40sp"
                     android:layout_gravity="center|top"
-                    android:layout_marginTop="35sp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginBottom="10sp"
                     android:background="@color/editTextColor"
                     android:hint="@string/email"
@@ -64,7 +64,7 @@
 
 
                 <EditText
-                    android:id="@+id/etPasswordSignUp"
+                    android:id="@+id/et_password_signin"
                     android:layout_width="260sp"
                     android:layout_height="50sp"
                     android:layout_gravity="center|bottom"
@@ -79,7 +79,7 @@
 </LinearLayout>
 
                 <Button
-                    android:id="@+id/btnSignUp"
+                    android:id="@+id/btn_signin"
                     android:layout_width="170sp"
                     android:layout_height="40sp"
                     android:layout_gravity="center|bottom"
@@ -104,7 +104,7 @@
                         android:textColor="@color/colorPrimary" />
 
                     <TextView
-                        android:id="@+id/tvSignInSignUp"
+                        android:id="@+id/tv_register"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5sp"

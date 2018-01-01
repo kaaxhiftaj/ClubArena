@@ -66,7 +66,7 @@
                 <EditText
                     android:id="@+id/et_password_signin"
                     android:layout_width="260sp"
-                    android:layout_height="50sp"
+                    android:layout_height="40sp"
                     android:layout_gravity="center|bottom"
                     android:layout_marginBottom="100sp"
                     android:background="@color/editTextColor"
@@ -76,7 +76,12 @@
                     android:textColor="@color/colorPrimary"
                     android:textColorHint="@color/colorPrimary"
                     android:textSize="15sp" />
-</LinearLayout>
+
+
+
+
+    </LinearLayout>
+
 
                 <Button
                     android:id="@+id/btn_signin"
@@ -89,6 +94,7 @@
                     android:textColor="@color/colorAccent"
                     android:textSize="20sp"
                     android:textStyle="bold" />
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -112,7 +118,23 @@
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
+
+
+
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_forgot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/forget_email"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:layout_gravity="bottom"
+                    android:textStyle="bold"
+                    />
+
             </android.support.v7.widget.CardView>
         </LinearLayout>
 

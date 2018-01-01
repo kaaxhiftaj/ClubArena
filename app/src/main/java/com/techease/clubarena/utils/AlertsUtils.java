@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
-import com.techease.clubarena.R;
 //import com.techease.clubarena.ui.widgets.LatoBoldTextView;
 
 

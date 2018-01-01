@@ -1,5 +1,6 @@
 package com.techease.clubarena.ui.activities;
 
+import android.app.Fragment;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,12 @@ import android.view.MenuItem;
 
 import com.techease.clubarena.R;
 import com.techease.clubarena.controllers.CustomTypefaceSpan;
+import com.techease.clubarena.ui.fragments.AuthChoice;
+import com.techease.clubarena.ui.fragments.BlogFragment;
+import com.techease.clubarena.ui.fragments.EventFragment;
+import com.techease.clubarena.ui.fragments.FavFragment;
+import com.techease.clubarena.ui.fragments.HomeFragment;
+import com.techease.clubarena.ui.fragments.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,6 +45,8 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        Fragment fragment = new HomeFragment();
+        getFragmentManager().beginTransaction().replace(R.id.fragment_main, fragment).addToBackStack("tag").commit();
 
         Menu m = navigationView.getMenu();
         for (int i=0;i<m.size();i++) {
@@ -97,16 +106,27 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-
+            Fragment fragment = new HomeFragment();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_main, fragment).addToBackStack("tag").commit();
 
         } else if (id == R.id.nav_event) {
 
+            Fragment fragment = new EventFragment();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_main, fragment).addToBackStack("tag").commit();
+
         } else if (id == R.id.nav_blog) {
+
+            Fragment fragment = new BlogFragment();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_main, fragment).addToBackStack("tag").commit();
 
         } else if (id == R.id.nav_favourites) {
 
+            Fragment fragment = new FavFragment();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_main, fragment).addToBackStack("tag").commit();
         } else if (id == R.id.nav_settings) {
 
+            Fragment fragment = new SettingsFragment();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_main, fragment).addToBackStack("tag").commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

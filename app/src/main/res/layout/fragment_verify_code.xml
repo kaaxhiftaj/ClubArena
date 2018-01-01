@@ -1,0 +1,102 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/back2"
+tools:context="com.techease.clubarena.ui.fragments.VerifyCodeFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp">
+
+        <EditText
+            android:id="@+id/et_code_num1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#b4bfbf"
+            android:background="@drawable/squreline"
+            android:layout_marginRight="10dp"
+            android:ems="10"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/et_code_num2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#b4bfbf"
+            android:background="@drawable/squreline"
+            android:layout_marginRight="10dp"
+            android:ems="10"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/et_code_num3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#b4bfbf"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/squreline"
+            android:ems="10"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/et_code_num4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#b4bfbf"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/squreline"
+            android:ems="10"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/et_code_num5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#b4bfbf"
+            android:background="@drawable/squreline"
+            android:ems="10"
+            android:layout_marginRight="10dp"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/et_code_num6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#b4bfbf"
+            android:background="@drawable/squreline"
+            android:ems="10"
+            android:inputType="phone" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_verify_code"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:padding="10sp"
+        android:background="@color/colorAccent"
+        android:text="@string/verify_code"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+
+        />
+
+
+</LinearLayout>

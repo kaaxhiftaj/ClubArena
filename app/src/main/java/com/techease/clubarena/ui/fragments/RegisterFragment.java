@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +44,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 public class RegisterFragment extends Fragment {
@@ -61,6 +64,9 @@ public class RegisterFragment extends Fragment {
 
     @BindView(R.id.tv_signin)
     TextView tv_signin;
+
+@BindView(R.id.pd)
+        ProgressBar pd ;
 
     Unbinder unbinder ;
     String  strUserName, strEmail, strPassword;
@@ -86,7 +92,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                onDataInput();
+               onDataInput();
             }
         });
 
@@ -118,8 +124,7 @@ public class RegisterFragment extends Fragment {
         } else if (strPassword.length() < 6 ) {
             et_password_signup.setError("Please enter a scure password");
         } else {
-            Log.d("zma data", strUserName+"\n"+strEmail+"\n"+strPassword);
-         //   DialogUtils.showProgressSweetDialog(getActivity(), "Getting registered");
+
             apiCall();
 
 
@@ -130,10 +135,12 @@ public class RegisterFragment extends Fragment {
 
     public void apiCall() {
         final StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://barapp.adadigbomma.com/Signup/register", new Response.Listener<String>() {
+
+
             @Override
             public void onResponse(String response) {
                 Log.d("zma  reg response", response);
-        //        DialogUtils.sweetAlertDialog.dismiss();
+                DialogUtils.sweetAlertDialog.dismiss();
                 if (response.contains("true")) {
 
                     try {
@@ -153,7 +160,7 @@ public class RegisterFragment extends Fragment {
                         JSONObject jsonObject = new JSONObject(response);
                         String message = jsonObject.getString("message");
                         Toast.makeText(getActivity(), message , Toast.LENGTH_SHORT).show();
-                //        DialogUtils.showErrorDialog(getActivity(), message);
+                        DialogUtils.showErrorDialog(getActivity(), message);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

@@ -2,6 +2,7 @@ package com.techease.clubarena.ui.fragments;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.text.Editable;
@@ -12,14 +13,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.techease.clubarena.R;
-
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,8 +32,10 @@ public class VerifyCodeFragment extends Fragment {
 
 
     EditText et_num1,et_num2,et_num3,et_num4,et_num5,et_num6;
-    String verifycode;
+    String strVerifyCode;
     Button btn_verify_code;
+    Fragment fragment ;
+    String email;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,6 +44,8 @@ public class VerifyCodeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_verify_code, container, false);
 
         btn_verify_code = view.findViewById(R.id.btn_verify_code);
+        Bundle args = getArguments();
+        email = args.getString("email");
 
 
             et_num1 = view.findViewById(R.id.et_code_num1);
@@ -67,14 +75,7 @@ public class VerifyCodeFragment extends Fragment {
                     String num5 = et_num5.getText().toString();
                     String num6 = et_num6.getText().toString();
 
-                    verifycode = num1+num2+num3+num4+num5+num6;
-
-
-                    Fragment fragment = new ResetPassFragment();
-                    FragmentManager fm = getFragmentManager();
-                    FragmentTransaction transaction = fm.beginTransaction();
-                    transaction.replace(R.id.fragment_container, fragment);
-                    transaction.addToBackStack("tag").commit();
+                    strVerifyCode = num1+num2+num3+num4+num5+num6;
 
                 }
             });
@@ -120,7 +121,12 @@ public class VerifyCodeFragment extends Fragment {
 
                 }if (et_num6.length()==1){
 
-                    apicall();
+                    strVerifyCode = et_num1.getText().toString()+et_num2.getText().toString()+et_num3.getText().toString()+
+                             et_num4.getText().toString()+et_num5.getText().toString()+et_num6.getText().toString() ;
+
+                    Toast.makeText(getActivity(), strVerifyCode, Toast.LENGTH_SHORT).show();
+
+                    onDataInput();
 
                 }
 
@@ -128,42 +134,70 @@ public class VerifyCodeFragment extends Fragment {
 
         };
 
-        private void apicall() {
+    public void onDataInput() {
 
-            String url = "http://techeasesol.com/postcard/PostCard_apis/verifycode";
-
-            StringRequest postRequest =  new StringRequest(Request.Method.POST, url, new
-                    Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-
-                            Toast.makeText(getActivity(), "Successful", Toast.LENGTH_SHORT).show();
-                            Fragment fragment = new ResetPassFragment();
-                            getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack("").commit();
-
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            error.printStackTrace();
-                            Toast.makeText(getActivity(),error.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    }){
-                @Override
-                protected Map<String, String> getParams()
-                {
-                    Map<String, String>  params = new HashMap<>();
-                    // the POST parameters:
-                    params.put("code", verifycode);
-
-
-                    return params;
-                }
-            };
-            Volley.newRequestQueue(getActivity()).add(postRequest);
-
+        if (strVerifyCode.equals("") || strVerifyCode.length() < 6) {
+            et_num6.setError("Please enter a valid code");
+        } else {
+            apiCall();
         }
+    }
+
+    public void apiCall() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://barapp.adadigbomma.com/Signup/CheckCode/",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.contains("true")){
+
+                                Bundle args = new Bundle();
+                                fragment = new ResetPassFragment();
+                                args.putString("code", strVerifyCode);
+                                 fragment.setArguments(args);
+                                Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+                                FragmentManager fm = getFragmentManager();
+                                FragmentTransaction transaction = fm.beginTransaction();
+                                transaction.replace(R.id.fragment_container, fragment);
+                                transaction.addToBackStack("tag").commit();
+
+
+
+                        }else {
+                            Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded;charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                params.put("code", strVerifyCode);
+                params.put("Accept", "application/json");
+                return params;
+            }
+
+        };
+        RequestQueue mRequestQueue = Volley.newRequestQueue(getActivity());
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(200000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        mRequestQueue.add(stringRequest);
+
+    }
 
     }
 

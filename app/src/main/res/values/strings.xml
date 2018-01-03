@@ -21,6 +21,7 @@
     <string name="reset_pass">RESET PASSWORD</string>
     <string name="forget_email">FORGET PASSWORD</string>
     <string name="verify_code">VERIFY CODE</string>
+    <string name="btn_ok">OK</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

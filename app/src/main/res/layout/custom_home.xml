@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -16,7 +18,7 @@
         android:id="@+id/cardViewCustomPesh_FD">
 
         <ImageView
-            android:id="@+id/ivPesh_FD"
+            android:id="@+id/iv_club_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:src="@drawable/play"
@@ -41,7 +43,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvRestName"
+                    android:id="@+id/tv_club_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/club_name"
@@ -54,6 +56,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/away"
                     android:textColor="@color/colorPrimary"
+                    android:id="@+id/tv_club_distance"
                     android:textSize="15sp"/>
 
 
@@ -68,7 +71,7 @@
                 >
 
                 <me.zhanghai.android.materialratingbar.MaterialRatingBar
-                    android:id="@+id/ratingBar"
+                    android:id="@+id/club_rating_bar"
                     style="@style/Widget.MaterialRatingBar.RatingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="25sp"
@@ -76,9 +79,13 @@
                     android:layout_marginLeft="10sp"
                     android:clickable="false"
                     android:focusable="false"
+                    android:background="@color/colorAccent"
                     android:focusableInTouchMode="false"
                     android:foregroundGravity="right"
-                    android:isIndicator="true" />
+                    android:isIndicator="true"
+                    android:rating="3"
+
+                    />
 
             </LinearLayout>
 

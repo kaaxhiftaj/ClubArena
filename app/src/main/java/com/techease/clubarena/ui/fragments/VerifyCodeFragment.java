@@ -15,13 +15,20 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.techease.clubarena.R;
+import com.techease.clubarena.utils.AlertsUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
@@ -36,6 +43,7 @@ public class VerifyCodeFragment extends Fragment {
     Button btn_verify_code;
     Fragment fragment ;
     String email;
+    android.support.v7.app.AlertDialog alertDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -124,8 +132,6 @@ public class VerifyCodeFragment extends Fragment {
                     strVerifyCode = et_num1.getText().toString()+et_num2.getText().toString()+et_num3.getText().toString()+
                              et_num4.getText().toString()+et_num5.getText().toString()+et_num6.getText().toString() ;
 
-                    Toast.makeText(getActivity(), strVerifyCode, Toast.LENGTH_SHORT).show();
-
                     onDataInput();
 
                 }
@@ -139,6 +145,10 @@ public class VerifyCodeFragment extends Fragment {
         if (strVerifyCode.equals("") || strVerifyCode.length() < 6) {
             et_num6.setError("Please enter a valid code");
         } else {
+            if (alertDialog == null){
+                alertDialog = AlertsUtils.createProgressDialog(getActivity());
+                alertDialog.show();
+            }
             apiCall();
         }
     }
@@ -150,7 +160,8 @@ public class VerifyCodeFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         if (response.contains("true")){
-
+                            if (alertDialog != null)
+                                alertDialog.dismiss();
                                 Bundle args = new Bundle();
                                 fragment = new ResetPassFragment();
                                 args.putString("code", strVerifyCode);
@@ -164,7 +175,17 @@ public class VerifyCodeFragment extends Fragment {
 
 
                         }else {
-                            Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
+
+                            JSONObject jsonObject = null;
+                            try {
+                                if (alertDialog != null)
+                                    alertDialog.dismiss();
+                                jsonObject = new JSONObject(response);
+                                String message = jsonObject.getString("message");
+                                AlertsUtils.showErrorDialog(getActivity(), message);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
 
 
@@ -173,6 +194,20 @@ public class VerifyCodeFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
+                if (alertDialog != null)
+                    alertDialog.dismiss();
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    AlertsUtils.showErrorDialog(getActivity(), "Connection Error");
+                } else if (error instanceof AuthFailureError) {
+
+                    AlertsUtils.showErrorDialog(getActivity(), "Auth Failure");
+                } else if (error instanceof ServerError) {
+                    AlertsUtils.showErrorDialog(getActivity(), "Server Error");
+                } else if (error instanceof NetworkError) {
+                    AlertsUtils.showErrorDialog(getActivity(), "Network Error");
+                } else if (error instanceof ParseError) {
+                    AlertsUtils.showErrorDialog(getActivity(), "Parse Error");
+                }
 
             }
         }) {

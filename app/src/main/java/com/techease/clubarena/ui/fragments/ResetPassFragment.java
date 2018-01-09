@@ -14,13 +14,22 @@ import android.widget.EditText;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.techease.clubarena.R;
+import com.techease.clubarena.utils.AlertsUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +49,8 @@ public class ResetPassFragment extends Fragment {
     @BindView(R.id.btn_reset)
     Button btn_reset ;
     String strPassword , strNewPasswordMatch, code ;
+    android.support.v7.app.AlertDialog alertDialog;
+
 
     Unbinder unbinder ;
     @Override
@@ -73,6 +84,10 @@ public class ResetPassFragment extends Fragment {
             et_passmatch_reset.setError("Password does'nt match");
         }  else {
 
+            if (alertDialog == null){
+                alertDialog = AlertsUtils.createProgressDialog(getActivity());
+                alertDialog.show();
+            }
             apiCall();
         }
     }
@@ -85,7 +100,8 @@ public class ResetPassFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         if (response.contains("true")) {
-
+                            if (alertDialog != null)
+                                alertDialog.dismiss();
                             Fragment fragment = new LoginFragment();
                             FragmentManager fm = getFragmentManager();
                             FragmentTransaction transaction = fm.beginTransaction();
@@ -94,13 +110,37 @@ public class ResetPassFragment extends Fragment {
 
                         } else {
 
+                            JSONObject jsonObject = null;
+                            try {
+                                if (alertDialog != null)
+                                    alertDialog.dismiss();
+                                jsonObject = new JSONObject(response);
+                                String message = jsonObject.getString("message");
+                                AlertsUtils.showErrorDialog(getActivity(), message);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
                         }
 
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                if (alertDialog != null)
+                    alertDialog.dismiss();
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    AlertsUtils.showErrorDialog(getActivity(), "Connection Error");
+                } else if (error instanceof AuthFailureError) {
 
+                    AlertsUtils.showErrorDialog(getActivity(), "Auth Failure");
+                } else if (error instanceof ServerError) {
+                    AlertsUtils.showErrorDialog(getActivity(), "Server Error");
+                } else if (error instanceof NetworkError) {
+                    AlertsUtils.showErrorDialog(getActivity(), "Network Error");
+                } else if (error instanceof ParseError) {
+                    AlertsUtils.showErrorDialog(getActivity(), "Parse Error");
+                }
 
             }
         }) {
@@ -127,18 +167,4 @@ public class ResetPassFragment extends Fragment {
 
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

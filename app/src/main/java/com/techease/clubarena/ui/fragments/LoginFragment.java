@@ -31,6 +31,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.techease.clubarena.R;
 import com.techease.clubarena.ui.activities.MainActivity;
+import com.techease.clubarena.utils.AlertsUtils;
 import com.techease.clubarena.utils.Configuration;
 
 import org.json.JSONException;
@@ -60,11 +61,12 @@ public class LoginFragment extends Fragment  {
     @BindView(R.id.tv_forgot)
             TextView tv_forgot ;
 
+    android.support.v7.app.AlertDialog alertDialog;
+
     Unbinder unbinder ;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     String strEmail, strPassword;
-    String device_token ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,7 +76,6 @@ public class LoginFragment extends Fragment  {
         unbinder = ButterKnife.bind(this, v);
         sharedPreferences = getActivity().getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        device_token = sharedPreferences.getString("device_token","");
 
         tv_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,54 +119,54 @@ public class LoginFragment extends Fragment  {
         } else if (strPassword.equals("")) {
             et_password_signin.setError("Please enter your password");
         } else {
-        //    DialogUtils.showProgressSweetDialog(getActivity(), "Getting Login");
+            if (alertDialog == null)
+                alertDialog = AlertsUtils.createProgressDialog(getActivity());
+            alertDialog.show();
             apiCall();
         }
     }
 
     public void apiCall() {
-//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-//        pDialog.setTitleText("Loading");
-//        pDialog.setCancelable(false);
-//        pDialog.show();
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST,  "http://barapp.adadigbomma.com/Signup/login"
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("zma log ", response);
-      //          DialogUtils.sweetAlertDialog.dismiss();
 
                 if (response.contains("true")) {
                     try {
+                            if (alertDialog != null)
+                                alertDialog.dismiss();
                         Log.d("zma log inner ", response);
                         JSONObject jsonObject = new JSONObject(response).getJSONObject("user");
                         String strApiToken = jsonObject.getString("token");
-                        String Logged_In_User_Id=jsonObject.getString("user_id");
-                        String fullname = jsonObject.getString("user_name");
-                        String email = jsonObject.getString("email");
-                        editor.putString("api_token", strApiToken);
-                        editor.putString("user_Id",Logged_In_User_Id);
-                        editor.putString("user_name" , fullname);
-                        editor.putString("email" , email);
+                        String user_id=jsonObject.getString("user_id");
+                        editor.putString("token", strApiToken);
+                        editor.putString("user_id",user_id);
                         editor.commit();
-                        startActivity(new Intent(getActivity(), MainActivity.class));
+                        Fragment fragment = new GetLocation();
+                        FragmentManager fm = getFragmentManager();
+                        FragmentTransaction transaction = fm.beginTransaction();
+                        transaction.replace(R.id.fragment_container, fragment);
+                        transaction.commit();
                         getActivity().finish();
 
 
                     } catch (JSONException e) {
                         e.printStackTrace();
+                            if (alertDialog != null)
+                                alertDialog.dismiss();
                         Log.d("error", String.valueOf(e.getMessage()));
                     }
-                    //  pDialog.dismiss();
-                    editor.putString("api_token", "abc").commit();
-
 
                 } else {
                     try {
+                        if (alertDialog != null)
+                            alertDialog.dismiss();
                         JSONObject jsonObject = new JSONObject(response);
                         String message = jsonObject.getString("message");
-                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                        AlertsUtils.showErrorDialog(getActivity(), message);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -177,17 +178,19 @@ public class LoginFragment extends Fragment  {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-          //      DialogUtils.sweetAlertDialog.dismiss();
+                if (alertDialog != null)
+                    alertDialog.dismiss();
+
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-          //          DialogUtils.showWarningAlertDialog(getActivity(), "Network Error");
+
                 } else if (error instanceof AuthFailureError) {
-          //          DialogUtils.showWarningAlertDialog(getActivity(), "Email or Password Error");
+                    AlertsUtils.showErrorDialog(getActivity(), "Auth Failure");
                 } else if (error instanceof ServerError) {
-          //          DialogUtils.showWarningAlertDialog(getActivity(), "Server Error");
+                    AlertsUtils.showErrorDialog(getActivity(), "Server Error");
                 } else if (error instanceof NetworkError) {
-         //           DialogUtils.showWarningAlertDialog(getActivity(), "Network Error");
+                    AlertsUtils.showErrorDialog(getActivity(), "Network Error");
                 } else if (error instanceof ParseError) {
-         //           DialogUtils.showWarningAlertDialog(getActivity(), "Parsing Error");
+                    AlertsUtils.showErrorDialog(getActivity(), "Parsing Error");
                 }
 
 

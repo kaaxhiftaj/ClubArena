@@ -17,14 +17,22 @@ import android.widget.EditText;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.techease.clubarena.R;
 import com.techease.clubarena.utils.AlertsUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +55,7 @@ public class ForgetPassFragment extends Fragment {
     String strEmail ;
 
     Fragment fragment;
+    android.support.v7.app.AlertDialog alertDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,23 +84,23 @@ public class ForgetPassFragment extends Fragment {
         if ((!android.util.Patterns.EMAIL_ADDRESS.matcher(strEmail).matches())) {
             et_email_forget.setError("Please enter valid email id");
         } else {
-            //    DialogUtils.showProgressSweetDialog(getActivity(), "Getting Login");
+            if (alertDialog == null){
+                alertDialog = AlertsUtils.createProgressDialog(getActivity());
+                alertDialog.show();
+            }
             apiCall();
         }
     }
 
     public void apiCall() {
-    //    final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-    //    pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-    //    pDialog.setTitleText("Loading");
-    //    pDialog.setCancelable(false);
-    //    pDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://barapp.adadigbomma.com/Signup/forgot", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 if (response.contains("true")) {
 
+                    if (alertDialog != null)
+                        alertDialog.dismiss();
                     fragment = new VerifyCodeFragment();
                     Bundle args = new Bundle();
                     args.putString("email", strEmail);
@@ -103,14 +112,37 @@ public class ForgetPassFragment extends Fragment {
 
 
                 }else{
-                    AlertsUtils.showErrorDialog(getActivity() , "Enter correct email");
+                    JSONObject jsonObject = null;
+                    try {
+                        if (alertDialog != null)
+                        alertDialog.dismiss();
+                        jsonObject = new JSONObject(response);
+                        String message = jsonObject.getString("message");
+                        AlertsUtils.showErrorDialog(getActivity(), message);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                AlertsUtils.showErrorDialog(getActivity() , "Response Error");
+                if (alertDialog != null)
+                    alertDialog.dismiss();
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    AlertsUtils.showErrorDialog(getActivity(), "Connection Error");
+                } else if (error instanceof AuthFailureError) {
+
+                    AlertsUtils.showErrorDialog(getActivity(), "Auth Failure");
+                } else if (error instanceof ServerError) {
+                    AlertsUtils.showErrorDialog(getActivity(), "Server Error");
+                } else if (error instanceof NetworkError) {
+                    AlertsUtils.showErrorDialog(getActivity(), "Network Error");
+                } else if (error instanceof ParseError) {
+                    AlertsUtils.showErrorDialog(getActivity(), "Parse Error");
+                }
             }
         }) {
             @Override

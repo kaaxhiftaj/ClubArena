@@ -27,7 +27,7 @@ public class FullScreenActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(ContextCompat.getColor(this,R.color.colorPrimary));
         Fragment fragment = new AuthChoice();
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack("tag").commit();
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
 
     }
 }

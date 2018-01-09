@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@drawable/back2"
+        android:alpha="0.8"
         tools:context="com.techease.clubarena.ui.fragments.RegisterFragment">
 
         <ScrollView

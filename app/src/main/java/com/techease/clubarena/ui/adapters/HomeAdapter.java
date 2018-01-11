@@ -1,6 +1,8 @@
 package com.techease.clubarena.ui.adapters;
 
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -12,12 +14,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.techease.clubarena.R;
 import com.techease.clubarena.models.HomeModel;
+import com.techease.clubarena.ui.fragments.ClubDetailPhotos;
+import com.techease.clubarena.ui.fragments.ClubDetails;
+import com.techease.clubarena.ui.fragments.GetLocation;
 import com.techease.clubarena.utils.Configuration;
 
 import java.util.List;
@@ -52,6 +58,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
         holder.club_rating_bar.setRating(Float.valueOf(home_model.getRating()));
         holder.club_rating_bar.getSolidColor();
         Glide.with(context).load(home_model.getImage_url()).into(holder.iv_club_image);
+
     }
 
 
@@ -63,29 +70,41 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView iv_club_image;
         TextView club_name;
+        RatingBar club_rating_bar;
         SharedPreferences sharedPreferences;
         SharedPreferences.Editor editor;
-        String api_token,Image_Url;
-        Typeface typeface,typeface2;
-        RatingBar club_rating_bar ;
+        Typeface typeface, typeface2;
+        LinearLayout custom_home_layout;
+
         public MyViewHolder(View itemView) {
             super(itemView);
             sharedPreferences = context.getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
             editor = sharedPreferences.edit();
+            custom_home_layout = (LinearLayout) itemView.findViewById(R.id.custom_home_layout);
+            iv_club_image = (ImageView) itemView.findViewById(R.id.iv_club_image);
+            club_name = (TextView) itemView.findViewById(R.id.tv_club_name);
+            club_rating_bar = (RatingBar) itemView.findViewById(R.id.club_rating_bar);
 
-            iv_club_image=(ImageView)itemView.findViewById(R.id.iv_club_image);
-            club_name = (TextView)itemView.findViewById(R.id.tv_club_name);
-            club_rating_bar = (RatingBar)itemView.findViewById(R.id.club_rating_bar);
-
-         //   typeface = Typeface.createFromAsset(context.getAssets(),"font/brandon_blk.otf");
-         //   typeface2 = Typeface.createFromAsset(context.getAssets(),"font/brandon_reg.otf");
-
-
+            //   typeface = Typeface.createFromAsset(context.getAssets(),"font/brandon_blk.otf");
+            //   typeface2 = Typeface.createFromAsset(context.getAssets(),"font/brandon_reg.otf");
+            custom_home_layout.setOnClickListener(this);
+            iv_club_image.setOnClickListener(this);
 
         }
 
+
+        @Override
+        public void onClick(View view) {
+
+            Fragment fragment=new ClubDetails();
+//            editor.putString("restId",id).commit();
+//            Bundle bundle=new Bundle();
+//            bundle.putString("restId",id);
+//            fragment.setArguments(bundle);
+            ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main,fragment).addToBackStack("abc").commit();
+        }
     }
 }

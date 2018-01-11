@@ -16,15 +16,19 @@ public class AppController extends MultiDexApplication {
     private static AppController mInstance;
     public static double USER_LOCATION_LAT = 0.0;
     public static double USER_LOCATION_LONG = 0.0;
- //   private static RealmController realmInstance;
 
     public static AppController getInstance() {
         return mInstance;
     }
 
- //   public static RealmController getRealmInstance() {
-//        return realmInstance;
- //   }
+
+    public static AppController create(Context context) {
+        return AppController.get(context);
+    }
+
+    private static AppController get(Context context) {
+        return (AppController) context.getApplicationContext();
+    }
 
     public static AppController context() {
         return mInstance;
@@ -35,8 +39,7 @@ public class AppController extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
-  //      Realm.init(mInstance);
-  //      realmInstance = new RealmController();
+
     }
 
 

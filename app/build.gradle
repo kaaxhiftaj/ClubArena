@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 
 
+
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -10,6 +12,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath false
+            }
+        }
     }
     buildTypes {
         release {
@@ -50,16 +58,18 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:27.0.2'
     compile 'me.zhanghai.android.materialratingbar:library:1.2.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.github.bumptech.glide:glide:4.3.1'
-    compile 'io.nlopez.smartlocation:library:3.3.1'
+    compile 'com.github.bumptech.glide:glide:4.4.0'
+    compile 'io.nlopez.smartlocation:library:3.3.3'
     compile 'io.nlopez.smartlocation:rx:3.3.1'
-
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }
+
+
+
 
 
 

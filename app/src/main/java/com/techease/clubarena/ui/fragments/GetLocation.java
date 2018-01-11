@@ -46,16 +46,13 @@ public class GetLocation extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_get_location, container, false);
-
-        Typeface custom_font = Typeface.createFromAsset(getActivity().getAssets(),  "fonts/Raleway-ExtraBold.ttf");
-     //   btn_use_my_location.setTypeface(custom_font);
         unbinder = ButterKnife.bind(this, v);
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
                     android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         }
+
         SmartLocation.with(getActivity()).location()
                 .start(new OnLocationUpdatedListener() {
 
@@ -66,21 +63,23 @@ public class GetLocation extends Fragment {
                         Log.d("Location : ", "" + lat + " " + lon);
                         Toast.makeText(getActivity(), String.valueOf(lat), Toast.LENGTH_SHORT).show();
 
-                            }
+                    }
 
 
                 });
 
-
+        
         btn_use_my_location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.putExtra("lat", lat);
-                intent.putExtra("lon", lon );
-                startActivity(intent);
-            }
-        });
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent.putExtra("lat", lat);
+                    intent.putExtra("lon", lon );
+                    startActivity(intent);
+                }
+            });
+
         return v;
     }
 

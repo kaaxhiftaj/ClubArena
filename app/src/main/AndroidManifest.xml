@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.techease.clubarena">
 
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,6 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.activities.FullScreenActivity"
             android:theme="@style/FullScreen" />
@@ -33,6 +35,12 @@
             android:name=".ui.activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+
+            android:value="AIzaSyB-nlOb637v1IdygX_9_iyhlTpPgrLRQ1A" />
+        <uses-library android:name="com.google.android.maps"/>
     </application>
 
 </manifest>

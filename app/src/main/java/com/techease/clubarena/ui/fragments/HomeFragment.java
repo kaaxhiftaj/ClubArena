@@ -74,23 +74,22 @@ public class HomeFragment extends Fragment {
             sharedPreferences = getActivity().getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
             editor = sharedPreferences.edit();
             user_id = sharedPreferences.getString("user_id","");
-            Toast.makeText(getActivity(), user_id, Toast.LENGTH_SHORT).show();
 
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
                         android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
             }
-            SmartLocation.with(getActivity()).location()
-                    .start(new OnLocationUpdatedListener() {
-
-                        @Override
-                        public void onLocationUpdated(Location location) {
-                            lat = location.getLatitude();
-                            lon = location.getLongitude();
-
-                        }
-                    });
+//            SmartLocation.with(getActivity()).location()
+//                    .start(new OnLocationUpdatedListener() {
+//
+//                        @Override
+//                        public void onLocationUpdated(Location location) {
+//                            lat = location.getLatitude();
+//                            lon = location.getLongitude();
+//
+//                        }
+//                    });
 
 
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -149,7 +148,6 @@ public class HomeFragment extends Fragment {
                         model.setRating(rating);
 
                         home_model_list.add(model);
-
 
                     }
                     home_adapter.notifyDataSetChanged();

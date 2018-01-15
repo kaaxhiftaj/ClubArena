@@ -68,7 +68,7 @@ public class GetLocation extends Fragment {
 
                 });
 
-        
+
         btn_use_my_location.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -4,7 +4,6 @@ package com.techease.clubarena.ui.fragments;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -30,10 +29,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.techease.clubarena.R;
-import com.techease.clubarena.ui.activities.MainActivity;
 import com.techease.clubarena.utils.AlertsUtils;
 import com.techease.clubarena.utils.Configuration;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;

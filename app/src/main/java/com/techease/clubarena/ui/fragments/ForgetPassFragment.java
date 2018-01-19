@@ -30,6 +30,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.techease.clubarena.R;
 import com.techease.clubarena.utils.AlertsUtils;
+import com.techease.clubarena.utils.Configuration;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -93,7 +94,7 @@ public class ForgetPassFragment extends Fragment {
     }
 
     public void apiCall() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://barapp.adadigbomma.com/Signup/forgot", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Configuration.USER_URL+"Signup/forgot", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 

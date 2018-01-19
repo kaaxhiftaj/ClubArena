@@ -13,7 +13,6 @@
         android:layout_height="230sp"
         android:clickable="true"
         card_view:cardCornerRadius="10dp"
-        card_view:cardBackgroundColor="@color/colorAccent"
         card_view:cardPreventCornerOverlap="true"
         card_view:cardUseCompatPadding="true"
         android:id="@+id/cardViewCustomPesh_FD">
@@ -21,8 +20,7 @@
         <ImageView
             android:id="@+id/iv_club_image"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/play"
+            android:layout_height="230dp"
             android:scaleType="fitXY"
 
             />
@@ -30,9 +28,9 @@
             android:layout_gravity="bottom"
             android:gravity="start|center"
             android:layout_width="match_parent"
-            android:layout_height="55sp"
-            android:background="@color/colorAccent"
-            android:alpha="0.6"
+            android:layout_height="45sp"
+            android:background="#000"
+            android:alpha="0.3"
             android:orientation="horizontal">
 
 
@@ -49,14 +47,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/club_name"
                     android:textSize="18sp"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorAccent"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/away"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorAccent"
                     android:id="@+id/tv_club_distance"
                     android:textSize="15sp"/>
 
@@ -80,7 +78,6 @@
                     android:layout_marginLeft="10sp"
                     android:clickable="false"
                     android:focusable="false"
-                    android:background="@color/colorAccent"
                     android:focusableInTouchMode="false"
                     android:foregroundGravity="right"
                     android:isIndicator="true"

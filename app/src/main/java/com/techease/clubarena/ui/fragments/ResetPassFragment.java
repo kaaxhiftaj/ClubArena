@@ -27,6 +27,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.techease.clubarena.R;
 import com.techease.clubarena.utils.AlertsUtils;
+import com.techease.clubarena.utils.Configuration;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -95,7 +96,7 @@ public class ResetPassFragment extends Fragment {
 
     public void apiCall() {
 
-        final StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://barapp.adadigbomma.com/Signup/Resetpassword",
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, Configuration.USER_URL+"Signup/Resetpassword",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

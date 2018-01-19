@@ -23,6 +23,7 @@ public class AlertsUtils {
 
     public static ProgressDialog progressDialog;
 
+
     /**
      * add new patient
      *

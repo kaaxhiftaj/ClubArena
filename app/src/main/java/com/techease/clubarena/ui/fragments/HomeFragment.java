@@ -80,16 +80,16 @@ public class HomeFragment extends Fragment {
                 requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
                         android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
             }
-//            SmartLocation.with(getActivity()).location()
-//                    .start(new OnLocationUpdatedListener() {
-//
-//                        @Override
-//                        public void onLocationUpdated(Location location) {
-//                            lat = location.getLatitude();
-//                            lon = location.getLongitude();
-//
-//                        }
-//                    });
+            SmartLocation.with(getActivity()).location()
+                    .start(new OnLocationUpdatedListener() {
+
+                        @Override
+                        public void onLocationUpdated(Location location) {
+                            lat = location.getLatitude();
+                            lon = location.getLongitude();
+
+                        }
+                    });
 
 
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -113,7 +113,7 @@ public class HomeFragment extends Fragment {
 
 
     private void apicall() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://barapp.adadigbomma.com/App/getAllBars"
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Configuration.USER_URL+"App/getAllBars"
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -146,7 +146,7 @@ public class HomeFragment extends Fragment {
                         model.setLat(latitude);
                         model.setLng(longitude);
                         model.setRating(rating);
-
+                        editor.putString("club_id", club_id).commit();
                         home_model_list.add(model);
 
                     }
@@ -180,7 +180,6 @@ public class HomeFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 if (alertDialog != null)
                     alertDialog.dismiss();
-                Log.d("error" , String.valueOf(error.getCause()));
 
             }
         }) {

@@ -1,6 +1,9 @@
 package com.techease.clubarena.ui.activities;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Build;
@@ -30,6 +33,7 @@ import com.techease.clubarena.ui.fragments.EventFragment;
 import com.techease.clubarena.ui.fragments.FavFragment;
 import com.techease.clubarena.ui.fragments.HomeFragment;
 import com.techease.clubarena.ui.fragments.SettingsFragment;
+import com.techease.clubarena.utils.Configuration;
 
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
@@ -37,23 +41,32 @@ import io.nlopez.smartlocation.SmartLocation;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    double lat, lon ;
+    Fragment fragment;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
+        sharedPreferences = MainActivity.this.getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        fragment = new HomeFragment();
+        getFragmentManager().beginTransaction().replace(R.id.fragment_main, fragment).commit();
+        setTitle("HOME");
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+        drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        Fragment fragment = new HomeFragment();
-        getFragmentManager().beginTransaction().replace(R.id.fragment_main, fragment).addToBackStack("tag").commit();
+
+
 
         Menu m = navigationView.getMenu();
         for (int i=0;i<m.size();i++) {
@@ -84,57 +97,41 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            Fragment fragment = new HomeFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragment_main, fragment).addToBackStack("tag").commit();
+             fragment = new HomeFragment();
 
         } else if (id == R.id.nav_event) {
 
-            Fragment fragment = new EventFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragment_main, fragment).addToBackStack("tag").commit();
+         fragment = new EventFragment();
+
 
         } else if (id == R.id.nav_blog) {
 
-            Fragment fragment = new BlogFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragment_main, fragment).addToBackStack("tag").commit();
+             fragment = new BlogFragment();
+
 
         } else if (id == R.id.nav_favourites) {
 
-            Fragment fragment = new FavFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragment_main, fragment).addToBackStack("tag").commit();
+           fragment = new FavFragment();
         } else if (id == R.id.nav_settings) {
 
-            Fragment fragment = new SettingsFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragment_main, fragment).addToBackStack("tag").commit();
+             fragment = new SettingsFragment();
+
+        } else if (id == R.id.nav_logout){
+            editor.clear().commit();
+            startActivity(new Intent(MainActivity.this, SplashScreen.class));
         }
+
+        getFragmentManager().beginTransaction().replace(R.id.fragment_main, fragment).addToBackStack("tag").commit();
+        item.setChecked(true);
+        setTitle(item.getTitle());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

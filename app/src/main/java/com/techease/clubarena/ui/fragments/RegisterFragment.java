@@ -128,7 +128,7 @@ public class RegisterFragment extends Fragment {
     }
 
     public void apiCall() {
-        final StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://barapp.adadigbomma.com/Signup/register", new Response.Listener<String>() {
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, Configuration.USER_URL+"Signup/register", new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -145,7 +145,7 @@ public class RegisterFragment extends Fragment {
                         editor.putString("user_id" , user_id );
                         editor.commit();
                         Toast.makeText(getActivity(), "Registration Successful", Toast.LENGTH_SHORT).show();
-                        Fragment fragment = new GetLocation();
+                        Fragment fragment = new LoginFragment();
                         FragmentManager fm = getFragmentManager();
                         FragmentTransaction transaction = fm.beginTransaction();
                         transaction.replace(R.id.fragment_container, fragment);

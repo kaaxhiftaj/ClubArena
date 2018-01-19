@@ -4,6 +4,7 @@ package com.techease.clubarena.ui.fragments;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -29,6 +30,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.techease.clubarena.R;
+import com.techease.clubarena.ui.activities.MainActivity;
 import com.techease.clubarena.utils.AlertsUtils;
 import com.techease.clubarena.utils.Configuration;
 import org.json.JSONException;
@@ -125,7 +127,7 @@ public class LoginFragment extends Fragment  {
 
     public void apiCall() {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,  "http://barapp.adadigbomma.com/Signup/login"
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,  Configuration.USER_URL+"Signup/login"
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -142,11 +144,7 @@ public class LoginFragment extends Fragment  {
                         editor.putString("token", strApiToken);
                         editor.putString("user_id",user_id);
                         editor.commit();
-                        Fragment fragment = new GetLocation();
-                        FragmentManager fm = getFragmentManager();
-                        FragmentTransaction transaction = fm.beginTransaction();
-                        transaction.replace(R.id.fragment_container, fragment);
-                        transaction.commit();
+                        startActivity(new Intent(getActivity(), MainActivity.class));
                         getActivity().finish();
 
 

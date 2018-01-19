@@ -9,56 +9,94 @@
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="40dp"
+        android:layout_margin="5dp"
+        android:weightSum="2"
         >
-
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@color/colorPrimary"
-            android:src="@drawable/location"
-            android:layout_gravity="center"
-            />
-
 
         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/colorAccent"
-        >
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@color/colorAccent">
 
 
-    <TextView
+      <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="City Name"
+        android:hint="@string/club_name"
         android:textColorHint="@color/colorPrimary"
         android:textColor="@color/colorPrimary"
         android:textSize="20dp"
-        android:layout_marginLeft="10dp"
-        android:id="@+id/info_city_name"
+        android:id="@+id/tv_club_name"
         />
 
-    <TextView
+            <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Aq pekahawar arbab road k yam"
+        android:hint="@string/club_type"
         android:textSize="15dp"
         android:textColorHint="@color/colorPrimary"
         android:textColor="@color/colorPrimary"
-        android:layout_marginLeft="10dp"
-        android:id="@+id/info_street_name"
+        android:id="@+id/tv_club_type"
         />
 
-    </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:background="@color/colorAccent">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/open_time"
+                android:textColorHint="@color/colorPrimary"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15dp"
+                android:id="@+id/tv_open_time"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/close_time"
+                android:textSize="15dp"
+                android:textColorHint="@color/colorPrimary"
+                android:textColor="@color/colorPrimary"
+                android:id="@+id/tv_close_time"
+                />
+
+        </LinearLayout>
 
 
     </LinearLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/tv_club_info"
+        android:textColor="@color/colorPrimary"
+        android:textSize="15dp"
+        />
+
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"

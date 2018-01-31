@@ -4,10 +4,10 @@ package com.techease.clubarena.models;
  * Created by kaxhiftaj on 1/8/18.
  */
 
-public class HomeModel {
+public class EventModel {
 
 
-    private String id, club_name, image_url, lat, lng, rating ;
+    private String id, club_name, event_name, image_url  ;
 
     public String getId() {
         return id;
@@ -33,29 +33,12 @@ public class HomeModel {
         this.image_url = image_url;
     }
 
-    public String getLat() {
-        return lat;
+
+    public String getEvent_name() {
+        return event_name;
     }
 
-    public void setLat(String lat) {
-        this.lat = lat;
+    public void setEvent_name(String event_name) {
+        this.event_name = event_name;
     }
-
-    public String getLng() {
-        return lng;
-    }
-
-    public void setLng(String lng) {
-        this.lng = lng;
-    }
-
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
 }
-

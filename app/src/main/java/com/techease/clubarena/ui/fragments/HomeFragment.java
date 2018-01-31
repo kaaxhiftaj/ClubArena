@@ -76,20 +76,20 @@ public class HomeFragment extends Fragment {
             user_id = sharedPreferences.getString("user_id","");
 
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
-                        android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-            }
-            SmartLocation.with(getActivity()).location()
-                    .start(new OnLocationUpdatedListener() {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+                            android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+                }
+                SmartLocation.with(getActivity()).location()
+                        .start(new OnLocationUpdatedListener() {
 
-                        @Override
-                        public void onLocationUpdated(Location location) {
-                            lat = location.getLatitude();
-                            lon = location.getLongitude();
+                            @Override
+                            public void onLocationUpdated(Location location) {
+                                lat = location.getLatitude();
+                                lon = location.getLongitude();
 
-                        }
-                    });
+                            }
+                        });
 
 
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -134,7 +134,6 @@ public class HomeFragment extends Fragment {
                         String distance =temp.getString("distance");
                         String longitude =temp.isNull("longitude")?null: temp.getString("longitude");
                         String latitude =temp.isNull("latitude")?null: temp.getString("latitude");
-                        String isFavorite =temp.getString("IsFavorite");
                         String open_time =temp.getString("open_time");
                         String close_time =temp.getString("close_time");
                         String totalReviews =temp.getString("totalReviews");

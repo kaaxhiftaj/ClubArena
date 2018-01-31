@@ -30,14 +30,16 @@ import java.util.List;
  * Created by kaxhiftaj on 1/8/18.
  */
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
+public class FavAdapter extends RecyclerView.Adapter<FavAdapter.MyViewHolder>{
 
     Context context ;
     List<HomeModel> home_models_list;
     String club_id ;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
 
-    public HomeAdapter(Context context, List<HomeModel> models) {
+    public FavAdapter(Context context, List<HomeModel> models) {
         this.context=context;
         this.home_models_list = models;
     }
@@ -45,13 +47,18 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_home,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_favourite,parent,false);
         return new MyViewHolder(view);
     }
 
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+
+        sharedPreferences = context.getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+
         final HomeModel home_model = home_models_list.get(position);
         holder.club_name.setText(home_model.getClub_name());
         club_id = home_model.getId();
@@ -66,6 +73,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
                 Fragment fragment=new ClubDetails();
                 Bundle bundle = new Bundle();
                 bundle.putString("club_id",  home_model.getId());
+            //    editor.putString("club_id", club_id).commit();
+                Toast.makeText(context, home_model.getId(), Toast.LENGTH_SHORT).show();
                 fragment.setArguments(bundle);
                 Activity activity=(MainActivity)context;
                 activity.getFragmentManager().beginTransaction().replace(R.id.fragment_main,fragment).addToBackStack("").commit();
@@ -103,9 +112,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
             club_distance = (TextView)itemView.findViewById(R.id.tv_club_distance);
             club_rating_bar = (RatingBar) itemView.findViewById(R.id.club_rating_bar);
 
-               typeface = Typeface.createFromAsset(context.getAssets(),"fonts/Raleway-Bold.ttf");
-               club_name.setTypeface(typeface);
-               club_distance.setTypeface(typeface);
+            typeface = Typeface.createFromAsset(context.getAssets(),"fonts/Raleway-Bold.ttf");
+            club_name.setTypeface(typeface);
+            club_distance.setTypeface(typeface);
 
 
 

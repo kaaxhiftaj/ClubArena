@@ -1,0 +1,250 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#525252"
+    android:layout_marginTop="55dp"
+    tools:context="com.techease.clubarena.ui.fragments.BookTicket">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/club_details_bg"
+            android:scaleType="fitXY"
+            android:id="@+id/event_image"
+            />
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_event_name"
+                android:text=" EVENT NAME "
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="20dp"
+                android:textColor="@color/colorAccent"
+                android:layout_marginLeft="20dp"
+                android:textStyle="bold"
+                />
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="11dp"
+                android:layout_gravity="center"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/location"
+                    android:layout_marginTop="10dp"
+
+
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_event_address"
+                        android:text=" EVENT Address "
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="15dp"
+                        android:layout_marginLeft="20dp"
+                        android:textStyle="bold"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" TICKET HOLDER NAME "
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/holder_name"
+                android:textSize="15dp"
+                android:textColor="@color/colorAccent"
+                android:layout_marginLeft="20dp"
+                android:textStyle="bold"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/et_holder_name"
+                android:layout_marginRight="20dp"
+                android:background="#606060"
+                android:hint="@string/user_name"
+                android:textColorHint="@color/colorAccent"
+                android:padding="15dp"
+                android:textColor="@color/colorAccent"
+                android:layout_marginTop="10dp"
+                android:textSize="15dp"
+                android:layout_marginLeft="20dp"
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" TICKETS NEEDED "
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/tkt_needed"
+                android:textSize="15dp"
+                android:textColor="@color/colorAccent"
+                android:layout_marginLeft="20dp"
+                android:textStyle="bold"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="#606060"
+                android:layout_marginTop="10dp"
+                android:weightSum="1"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textSize="30dp"
+                    android:id="@+id/tv_ticket_minus"
+                    android:textColor="@color/colorAccent"
+                    android:gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.1"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text=" 1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:id="@+id/tv_tickets_needed"
+                    android:background="#606060"
+                    android:layout_weight="0.8"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="15dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:textSize="30dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/tv_ticket_plus"
+                    android:textColor="@color/colorAccent"
+                    android:gravity="center"
+                   android:layout_marginRight="10dp"
+                    android:layout_weight="0.1"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TOTAL COST "
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/total_cost"
+                android:textColor="@color/colorAccent"
+                android:textSize="15dp"
+                android:layout_marginLeft="20dp"
+                android:textStyle="bold"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text=" $300 "
+                android:id="@+id/tv_total_cost"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/colorAccent"
+                android:background="#606060"
+                android:layout_marginTop="10dp"
+                android:textSize="15dp"
+                android:layout_marginLeft="20dp"
+                />
+
+
+
+
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/acknowledment"
+                    android:textColor="@color/colorAccent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/checkbox"
+                    />
+
+
+
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" BOOK TICKET  "
+                android:id="@+id/btn_book_ticket"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:background="@color/colorAccent"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginLeft="20dp"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

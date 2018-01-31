@@ -45,6 +45,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.LongToDoubleFunction;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -80,6 +81,10 @@ public class ClubDetails extends Fragment {
     String phone_no, website, email ;
     Typeface custom_font ;
     String club_id ;
+    String user_id ;
+    Boolean isfav ;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
 
 
@@ -92,6 +97,10 @@ public class ClubDetails extends Fragment {
         custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway-ExtraBold.ttf");
         club_id = getArguments().getString("club_id");
 
+        sharedPreferences = getActivity().getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        user_id = sharedPreferences.getString("user_id","");
+//        club_id = sharedPreferences.getString("club_id","");
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -169,6 +178,11 @@ public class ClubDetails extends Fragment {
         iv_fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (alertDialog == null)
+                    alertDialog = AlertsUtils.createProgressDialog(getActivity());
+                alertDialog.show();
+
+                favapicall();
 
             }
         });
@@ -329,5 +343,69 @@ public class ClubDetails extends Fragment {
             }
         }
     }
+
+
+
+
+
+
+    private void favapicall() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Configuration.USER_URL+"App/favorite_bar"
+                , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.contains("true")) {
+
+                        if (alertDialog != null)
+                            alertDialog.dismiss();
+                    Toast.makeText(getActivity(), "Added to Favourites", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    try {
+                        if (alertDialog != null)
+                            alertDialog.dismiss();
+                        JSONObject jsonObject = new JSONObject(response);
+                        String message = jsonObject.getString("message");
+                        AlertsUtils.showErrorDialog(getActivity(), message);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        if (alertDialog != null)
+                            alertDialog.dismiss();
+                    }
+                }
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (alertDialog != null)
+                    alertDialog.dismiss();
+                Log.d("error" , String.valueOf(error.getCause()));
+
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded;charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("club_id", club_id );
+                params.put("user_id", user_id);
+
+                return params;
+            }
+
+        };
+        RequestQueue mRequestQueue = Volley.newRequestQueue(getActivity());
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(20000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        mRequestQueue.add(stringRequest);
+    }
+
 
 }

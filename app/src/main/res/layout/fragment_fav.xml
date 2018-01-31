@@ -5,4 +5,11 @@
     tools:context="com.techease.clubarena.ui.fragments.FavFragment">
 
 
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="55dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rv_fav"
+        ></android.support.v7.widget.RecyclerView>
+
 </FrameLayout>

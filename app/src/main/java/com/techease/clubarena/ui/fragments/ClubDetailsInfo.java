@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.techease.clubarena.R;
 import com.techease.clubarena.models.ModelClubDetails;
+import com.techease.clubarena.ui.activities.SplashScreen;
 import com.techease.clubarena.ui.adapters.ClubDetailsPhotoAdapter;
 import com.techease.clubarena.utils.AlertsUtils;
 import com.techease.clubarena.utils.Configuration;
@@ -74,11 +75,12 @@ public class ClubDetailsInfo extends Fragment {
 
     String club_id ;
 
-
-
     String name , club_type, open_time , close_time, information, latitude, longitude  ;
     Typeface custom_font ;
     private GoogleMap googleMap;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
     android.support.v7.app.AlertDialog alertDialog;
 
     @Override
@@ -125,7 +127,7 @@ public class ClubDetailsInfo extends Fragment {
                     }
                     googleMap.setMyLocationEnabled(true);
 
-                    LatLng sydney = new LatLng( 53.558, 9.927 );
+                   LatLng sydney = new LatLng( 53.558, 9.927 );
                     googleMap.addMarker(new MarkerOptions().position(sydney).title(name));
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -194,9 +196,9 @@ public class ClubDetailsInfo extends Fragment {
                         tv_open_time.setText("Open Time : " + open_time);
                         tv_close_time.setText("Close Time : " + close_time);
                         tv_club_info.setText("About Club : " + information);
-                        Float lat = Float.valueOf(latitude);
-                        Float lon = Float.valueOf(longitude);
-                        putMarker(lat, lon );
+                        float lat = Float.valueOf(latitude);
+                        float lon = Float.valueOf(longitude);
+                        putMarker( lat, lon);
 
 
                     } catch (JSONException e) {
@@ -253,9 +255,9 @@ public class ClubDetailsInfo extends Fragment {
 
 
 
-    public  void  putMarker(Float lat, float lon ){
+    public  void  putMarker(float lat, float lon){
         LatLng sydney = new LatLng( lat, lon  );
-        googleMap.addMarker(new MarkerOptions().position(sydney).title(name));
+        googleMap.addMarker(new MarkerOptions().position(sydney).title(""));
         CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 

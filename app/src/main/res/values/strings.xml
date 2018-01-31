@@ -28,4 +28,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
+    <string name="acknowledment">I Acknowledge that I’m elder then 18 , and by clicking this
+        I agreed with the app privacy policies. </string>
+    <string name="default_notification_channel_id">
+AIzaSyAdKC7iMUO_MgE5IfqbJ9KpHYg--OFWW4A</string>
 </resources>

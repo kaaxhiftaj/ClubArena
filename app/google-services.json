@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "84339721980",
+    "firebase_url": "https://club-arena-fba4d.firebaseio.com",
+    "project_id": "club-arena-fba4d",
+    "storage_bucket": "club-arena-fba4d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:84339721980:android:54d8aeed2a251f28",
+        "android_client_info": {
+          "package_name": "com.techease.clubarena"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "84339721980-1bsde5rs4rdou6k2igntbf4icgqg8i74.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.techease.clubarena",
+            "certificate_hash": "03cc2dd2a029466bbdea9f3ffff74e7382bfe998"
+          }
+        },
+        {
+          "client_id": "84339721980-9c4f88clkra3k3mbl4mtmns6pkgjbmta.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvfNAjoyCL5mFKnuUcvEXcHtcDuIO0Uus"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "84339721980-9c4f88clkra3k3mbl4mtmns6pkgjbmta.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

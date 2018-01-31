@@ -19,9 +19,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.techease.clubarena.R;
+import com.techease.clubarena.models.EventModel;
 import com.techease.clubarena.models.HomeModel;
 import com.techease.clubarena.ui.activities.MainActivity;
 import com.techease.clubarena.ui.fragments.ClubDetails;
+import com.techease.clubarena.ui.fragments.EventDetails;
 import com.techease.clubarena.utils.Configuration;
 
 import java.util.List;
@@ -30,42 +32,41 @@ import java.util.List;
  * Created by kaxhiftaj on 1/8/18.
  */
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
+public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder>{
 
     Context context ;
-    List<HomeModel> home_models_list;
+    List<EventModel> event_models_list;
     String club_id ;
 
 
-    public HomeAdapter(Context context, List<HomeModel> models) {
+    public EventAdapter(Context context, List<EventModel> models) {
         this.context=context;
-        this.home_models_list = models;
+        this.event_models_list = models;
     }
 
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_home,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_events,parent,false);
         return new MyViewHolder(view);
     }
 
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
-        final HomeModel home_model = home_models_list.get(position);
-        holder.club_name.setText(home_model.getClub_name());
-        club_id = home_model.getId();
-        holder.club_rating_bar.setRating(Float.valueOf(home_model.getRating()));
-        holder.club_rating_bar.getSolidColor();
-        Glide.with(context).load(home_model.getImage_url()).into(holder.iv_club_image);
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        final EventModel event_model = event_models_list.get(position);
+        holder.club_name.setText(event_model.getClub_name());
+        holder.event_name.setText(event_model.getEvent_name());
+        club_id = event_model.getId();
+        Glide.with(context).load(event_model.getImage_url()).into(holder.iv_club_image);
 
         holder.iv_club_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Fragment fragment=new ClubDetails();
+                Fragment fragment=new EventDetails();
                 Bundle bundle = new Bundle();
-                bundle.putString("club_id",  home_model.getId());
+                bundle.putString("event_id",  event_model.getId());
                 fragment.setArguments(bundle);
                 Activity activity=(MainActivity)context;
                 activity.getFragmentManager().beginTransaction().replace(R.id.fragment_main,fragment).addToBackStack("").commit();
@@ -78,15 +79,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
 
     @Override
     public int getItemCount() {
-        return home_models_list.size();
+        return event_models_list.size();
 
     }
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         ImageView iv_club_image;
-        TextView club_name, club_distance;
-        RatingBar club_rating_bar;
+        TextView club_name, event_name, club_distance;
         SharedPreferences sharedPreferences;
         SharedPreferences.Editor editor;
         Typeface typeface;
@@ -101,11 +101,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
             iv_club_image = (ImageView) itemView.findViewById(R.id.iv_club_image);
             club_name = (TextView) itemView.findViewById(R.id.tv_club_name);
             club_distance = (TextView)itemView.findViewById(R.id.tv_club_distance);
-            club_rating_bar = (RatingBar) itemView.findViewById(R.id.club_rating_bar);
+            event_name = (TextView)itemView.findViewById(R.id.tv_event_name);
 
-               typeface = Typeface.createFromAsset(context.getAssets(),"fonts/Raleway-Bold.ttf");
-               club_name.setTypeface(typeface);
-               club_distance.setTypeface(typeface);
+            typeface = Typeface.createFromAsset(context.getAssets(),"fonts/Raleway-Bold.ttf");
+            club_name.setTypeface(typeface);
+            club_distance.setTypeface(typeface);
 
 
 

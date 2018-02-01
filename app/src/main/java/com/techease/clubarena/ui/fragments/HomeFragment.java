@@ -68,6 +68,7 @@ public class HomeFragment extends Fragment {
         View v =  inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, v);
 
+
         if(InternetUtils.isNetworkConnected(getActivity()))
         {
 

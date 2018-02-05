@@ -54,7 +54,7 @@ public class ConfirmBooking extends Fragment {
         unbinder = ButterKnife.bind(this, v);
 
         extra_bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway_ExtraBold.ttf");
-        bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway-Bold.ttf");
+        bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway_Bold.ttf");
         light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway-Regular.ttf");
 
 

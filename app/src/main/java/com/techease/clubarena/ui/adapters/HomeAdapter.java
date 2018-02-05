@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.techease.clubarena.R;
@@ -103,7 +102,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>{
             club_distance = (TextView)itemView.findViewById(R.id.tv_club_distance);
             club_rating_bar = (RatingBar) itemView.findViewById(R.id.club_rating_bar);
 
-               typeface = Typeface.createFromAsset(context.getAssets(),"fonts/Raleway-Bold.ttf");
+               typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Raleway_Bold.ttf");
                club_name.setTypeface(typeface);
                club_distance.setTypeface(typeface);
 

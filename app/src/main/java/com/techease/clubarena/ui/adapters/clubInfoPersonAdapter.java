@@ -49,12 +49,16 @@ public class clubInfoPersonAdapter extends RecyclerView.Adapter<clubInfoPersonAd
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle,tvDesignation;
-        Typeface typeface;
+        Typeface typeface,typeface2;
         public MyViewHolder(View itemView) {
             super(itemView);
 
             tvTitle=(TextView)itemView.findViewById(R.id.tvTitle);
             tvDesignation=(TextView)itemView.findViewById(R.id.tvDesignation);
+            typeface=Typeface.createFromAsset(context.getAssets(),"fonts/Raleway_Bold.ttf");
+            typeface2=Typeface.createFromAsset(context.getAssets(),"fonts/Raleway_Medium.ttf");
+            tvTitle.setTypeface(typeface);
+            tvDesignation.setTypeface(typeface2);
         }
     }
 }

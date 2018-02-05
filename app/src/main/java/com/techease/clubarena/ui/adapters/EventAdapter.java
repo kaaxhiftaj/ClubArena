@@ -13,16 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.techease.clubarena.R;
 import com.techease.clubarena.models.EventModel;
-import com.techease.clubarena.models.HomeModel;
 import com.techease.clubarena.ui.activities.MainActivity;
-import com.techease.clubarena.ui.fragments.ClubDetails;
 import com.techease.clubarena.ui.fragments.EventDetails;
 import com.techease.clubarena.utils.Configuration;
 
@@ -103,7 +99,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
             club_distance = (TextView)itemView.findViewById(R.id.tv_club_distance);
             event_name = (TextView)itemView.findViewById(R.id.tv_event_name);
 
-            typeface = Typeface.createFromAsset(context.getAssets(),"fonts/Raleway-Bold.ttf");
+            typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Raleway_Bold.ttf");
             club_name.setTypeface(typeface);
             club_distance.setTypeface(typeface);
 

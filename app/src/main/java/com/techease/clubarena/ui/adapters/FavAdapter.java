@@ -112,7 +112,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.MyViewHolder>{
             club_distance = (TextView)itemView.findViewById(R.id.tv_club_distance);
             club_rating_bar = (RatingBar) itemView.findViewById(R.id.club_rating_bar);
 
-            typeface = Typeface.createFromAsset(context.getAssets(),"fonts/Raleway-Bold.ttf");
+            typeface = Typeface.createFromAsset(context.getAssets(), "fonts/Raleway_Bold.ttf");
             club_name.setTypeface(typeface);
             club_distance.setTypeface(typeface);
 

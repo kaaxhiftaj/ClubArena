@@ -98,7 +98,7 @@ public class BookTicket extends Fragment {
         cost = Integer.parseInt(tkt_price);
 
         extra_bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway_ExtraBold.ttf");
-        bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway-Bold.ttf");
+        bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway_Bold.ttf");
         light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway-Regular.ttf");
 
         tv_event_name.setTypeface(extra_bold);

@@ -75,7 +75,7 @@ public class EventDetails extends Fragment {
         View v = inflater.inflate(R.layout.fragment_event_details, container, false);
         unbinder = ButterKnife.bind(this,v);
 
-        extra_bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway-ExtraBold.ttf");
+        extra_bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway_ExtraBold.ttf");
         bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway-Bold.ttf");
         light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway-Regular.ttf");
 

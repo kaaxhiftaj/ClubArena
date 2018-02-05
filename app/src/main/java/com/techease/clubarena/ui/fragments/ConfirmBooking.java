@@ -1,20 +1,15 @@
 package com.techease.clubarena.ui.fragments;
 
-import android.content.Context;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.techease.clubarena.R;
 import com.techease.clubarena.utils.InternetUtils;
 
@@ -58,7 +53,7 @@ public class ConfirmBooking extends Fragment {
         View v = inflater.inflate(R.layout.fragment_confirm_booking, container, false);
         unbinder = ButterKnife.bind(this, v);
 
-        extra_bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway-ExtraBold.ttf");
+        extra_bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway_ExtraBold.ttf");
         bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway-Bold.ttf");
         light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway-Regular.ttf");
 

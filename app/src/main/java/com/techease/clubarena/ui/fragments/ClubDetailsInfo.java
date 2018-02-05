@@ -1,19 +1,21 @@
 package com.techease.clubarena.ui.fragments;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -31,12 +33,12 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.techease.clubarena.R;
-import com.techease.clubarena.models.ModelClubDetails;
-import com.techease.clubarena.ui.activities.SplashScreen;
-import com.techease.clubarena.ui.adapters.ClubDetailsPhotoAdapter;
+import com.techease.clubarena.models.clubInfoPersonModel;
+import com.techease.clubarena.ui.adapters.clubInfoPersonAdapter;
 import com.techease.clubarena.utils.AlertsUtils;
 import com.techease.clubarena.utils.Configuration;
 import com.techease.clubarena.utils.InternetUtils;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,6 +47,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -72,8 +75,10 @@ public class ClubDetailsInfo extends Fragment {
             TextView tv_club_info ;
 
     Unbinder unbinder;
-
+    List<clubInfoPersonModel> cluebInfoPersonModels;
+    clubInfoPersonAdapter clubInfoAdapter;
     String club_id ;
+    RecyclerView recyclerView;
 
     String name , club_type, open_time , close_time, information, latitude, longitude  ;
     Typeface custom_font ;
@@ -91,8 +96,12 @@ public class ClubDetailsInfo extends Fragment {
         View v = inflater.inflate(R.layout.fragment_club_details_info, container, false);
         unbinder = ButterKnife.bind(this,v );
         club_id =getArguments().getString("club_id");
-
-        custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway-ExtraBold.ttf");
+        recyclerView=(RecyclerView)v.findViewById(R.id.rvPerson);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        cluebInfoPersonModels=new ArrayList<>();
+        clubInfoAdapter=new clubInfoPersonAdapter(getActivity(),cluebInfoPersonModels);
+        recyclerView.setAdapter(clubInfoAdapter);
+        custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway_ExtraBold.ttf");
         tv_club_name.setTypeface(custom_font);
         tv_club_type.setTypeface(custom_font);
         tv_open_time.setTypeface(custom_font);
@@ -198,9 +207,19 @@ public class ClubDetailsInfo extends Fragment {
                         tv_club_info.setText("About Club : " + information);
                         float lat = Float.valueOf(latitude);
                         float lon = Float.valueOf(longitude);
-                        putMarker( lat, lon);
+                       // putMarker( lat, lon);
 
-
+                        JSONArray jsonArray=temp.getJSONArray("team");
+                        for (int j=0; j<jsonArray.length(); j++)
+                        {
+                            Log.d("zmaTeam",jsonArray.toString());
+                            JSONObject jsonObject1=jsonArray.getJSONObject(j);
+                            clubInfoPersonModel clubModel=new clubInfoPersonModel();
+                            clubModel.setTitle(jsonObject1.getString("title"));
+                            clubModel.setDesignation(jsonObject1.getString("designation"));
+                            cluebInfoPersonModels.add(clubModel);
+                        }
+                        clubInfoAdapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
                         if (alertDialog != null)

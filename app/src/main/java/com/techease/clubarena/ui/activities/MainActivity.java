@@ -7,40 +7,29 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.location.Location;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.util.Log;
-import android.view.SubMenu;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.SubMenu;
 
 import com.techease.clubarena.FirebaseClasses.ForceUpdateChecker;
 import com.techease.clubarena.R;
 import com.techease.clubarena.controllers.CustomTypefaceSpan;
-import com.techease.clubarena.ui.fragments.AuthChoice;
 import com.techease.clubarena.ui.fragments.BlogFragment;
 import com.techease.clubarena.ui.fragments.EventFragment;
 import com.techease.clubarena.ui.fragments.FavFragment;
 import com.techease.clubarena.ui.fragments.HomeFragment;
 import com.techease.clubarena.ui.fragments.SettingsFragment;
 import com.techease.clubarena.utils.Configuration;
-
-import io.nlopez.smartlocation.OnLocationUpdatedListener;
-import io.nlopez.smartlocation.SmartLocation;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ForceUpdateChecker.OnUpdateNeededListener {
@@ -119,7 +108,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_blog) {
 
             fragment = new BlogFragment();
-
 
         } else if (id == R.id.nav_favourites) {
 

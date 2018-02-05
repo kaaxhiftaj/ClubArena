@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ClubArena.iml" filepath="$PROJECT_DIR$/ClubArena.iml" />
+      <module fileurl="file://E:\AndroidProjects\ClubArena\ClubArena.iml" filepath="E:\AndroidProjects\ClubArena\ClubArena.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://E:\AndroidProjects\ClubArena\app\app.iml" filepath="E:\AndroidProjects\ClubArena\app\app.iml" />
     </modules>
   </component>
 </project>

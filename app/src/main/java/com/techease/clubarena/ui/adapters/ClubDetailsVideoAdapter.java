@@ -99,7 +99,7 @@ public class ClubDetailsVideoAdapter extends RecyclerView.Adapter<ClubDetailsVid
             Typeface typeface;
             public MyViewHolder(View itemView) {
                 super(itemView);
-                typeface=Typeface.createFromAsset(context.getAssets(),"fonts/Raleway-ExtraBold.ttf");
+                typeface=Typeface.createFromAsset(context.getAssets(), "fonts/Raleway_ExtraBold.ttf");
                 text=(TextView)itemView.findViewById(R.id.tvVideoTitle);
                 text.setTypeface(typeface);
                 playButton=(ImageView)itemView.findViewById(R.id.btnYoutube_player);

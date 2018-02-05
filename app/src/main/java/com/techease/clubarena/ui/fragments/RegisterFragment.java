@@ -79,7 +79,7 @@ public class RegisterFragment extends Fragment {
         editor = sharedPreferences.edit();
 
 
-        Typeface custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway-ExtraBold.ttf");
+        Typeface custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway_ExtraBold.ttf");
         tv_signin.setTypeface(custom_font);
 
         btn_signup.setOnClickListener(new View.OnClickListener() {

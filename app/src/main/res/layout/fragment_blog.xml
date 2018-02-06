@@ -8,19 +8,12 @@
     android:gravity="center"
     tools:context="com.techease.clubarena.ui.fragments.BlogFragment">
 
-    <GridView
-        android:id="@+id/gridView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:columnWidth="90dp"
-        android:padding="10sp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_centerInParent = "true"
-        android:horizontalSpacing="5dp"
-        android:numColumns="2"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="5dp"
-        ></GridView>
+  <android.support.v7.widget.RecyclerView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:padding="10sp"
+      android:layout_marginTop="50sp"
+      android:id="@+id/rvBlog">
+  </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

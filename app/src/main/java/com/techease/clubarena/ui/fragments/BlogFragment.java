@@ -2,11 +2,12 @@ package com.techease.clubarena.ui.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -19,7 +20,12 @@ import com.android.volley.toolbox.Volley;
 import com.techease.clubarena.R;
 import com.techease.clubarena.models.BlogModel;
 import com.techease.clubarena.ui.adapters.BlogAdapter;
+import com.techease.clubarena.utils.AlertsUtils;
 import com.techease.clubarena.utils.Configuration;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,33 +34,69 @@ import java.util.Map;
 
 public class BlogFragment extends Fragment {
 
-    GridView gridView;
+    RecyclerView recyclerView;
     ArrayList<BlogModel> blogModels;
     BlogAdapter blogAdapter;
+    android.support.v7.app.AlertDialog alertDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_blog, container, false);
 
-        gridView=(GridView)v.findViewById(R.id.gridView);
+        recyclerView=(RecyclerView) v.findViewById(R.id.rvBlog);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        if (alertDialog == null)
+            alertDialog = AlertsUtils.createProgressDialog(getActivity());
         apicall();
+        blogModels=new ArrayList<>();
+        blogAdapter=new BlogAdapter(getActivity(),blogModels);
+        recyclerView.setAdapter(blogAdapter);
         return v;
     }
 
     private void apicall() {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+" "
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+"App/blog"
                 , new Response.Listener<String>() {
+
             @Override
             public void onResponse(String response) {
                 Log.d("zma  reg response", response);
-                //   DialogUtils.sweetAlertDialog.dismiss();
+                try {
+                    JSONObject jsonObject1=new JSONObject(response);
+                    JSONArray jsonArray=jsonObject1.getJSONArray("user ");
+
+                    for (int i=0; i<jsonArray.length(); i++)
+                    {
+                        JSONObject jsonObject=jsonArray.getJSONObject(i);
+                        BlogModel bModel=new BlogModel();
+                        bModel.setBlogId(jsonObject.getString("id"));
+                        bModel.setBlogTitle(jsonObject.getString("title"));
+                        bModel.setBlogDes(jsonObject.getString("description"));
+                        bModel.setBlogLink(jsonObject.getString("link"));
+                        bModel.setBlogImageLink(jsonObject.getString("image"));
+                        blogModels.add(bModel);
+                        if (alertDialog != null)
+                            alertDialog.dismiss();
+                    }
+                    blogAdapter.notifyDataSetChanged();
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    if (alertDialog != null)
+                        alertDialog.dismiss();
+                }
+
+
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                if (alertDialog != null)
+                    alertDialog.dismiss();
                 //DialogUtils.sweetAlertDialog.dismiss();
                 // DialogUtils.showErrorTypeAlertDialog(getActivity(), "Server error");
                 Log.d("error" , String.valueOf(error.getCause()));

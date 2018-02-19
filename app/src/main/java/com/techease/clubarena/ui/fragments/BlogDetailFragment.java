@@ -30,14 +30,10 @@ public class BlogDetailFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         user_id=sharedPreferences.getString("user_id","");
-        Toast.makeText(getActivity(), user_id, Toast.LENGTH_SHORT).show();
         url=getArguments().getString("blogId");
         webView=(WebView)view.findViewById(R.id.wv);
-        webView.getSettings().setPluginState(WebSettings.PluginState.ON);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-        webView.setScrollbarFadingEnabled(false);
-        webView.setInitialScale(120);
+
         webView.setWebViewClient(new WebViewClient(){
 
             @Override

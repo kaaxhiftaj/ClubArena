@@ -74,6 +74,8 @@ public class ClubDetailsInfo extends Fragment {
     @BindView(R.id.tv_club_info)
             TextView tv_club_info ;
 
+    float lat , lon ;
+
     Unbinder unbinder;
     List<clubInfoPersonModel> cluebInfoPersonModels;
     clubInfoPersonAdapter clubInfoAdapter;
@@ -136,10 +138,10 @@ public class ClubDetailsInfo extends Fragment {
                     }
                     googleMap.setMyLocationEnabled(true);
 
-                   LatLng sydney = new LatLng( 53.558, 9.927 );
-                    googleMap.addMarker(new MarkerOptions().position(sydney).title(name));
-                    CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
-                    googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+//                   LatLng sydney = new LatLng( 53.558, 9.927 );
+//                    googleMap.addMarker(new MarkerOptions().position(sydney).title(name));
+//                    CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
+//                    googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 }
             });
 
@@ -205,9 +207,8 @@ public class ClubDetailsInfo extends Fragment {
                         tv_open_time.setText("Open Time : " + open_time);
                         tv_close_time.setText("Close Time : " + close_time);
                         tv_club_info.setText("About Club : " + information);
-                        float lat = Float.valueOf(latitude);
-                        float lon = Float.valueOf(longitude);
-                       // putMarker( lat, lon);
+                         lat = Float.valueOf(latitude);
+                         lon = Float.valueOf(longitude);
 
                         JSONArray jsonArray=temp.getJSONArray("team");
                         for (int j=0; j<jsonArray.length(); j++)
@@ -219,12 +220,15 @@ public class ClubDetailsInfo extends Fragment {
                             clubModel.setDesignation(jsonObject1.getString("designation"));
                             cluebInfoPersonModels.add(clubModel);
                         }
+
                         clubInfoAdapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
                         if (alertDialog != null)
                             alertDialog.dismiss();
                     }
+
+                    putMarker( lat, lon);
                 }
                 else {
                     try {
@@ -276,10 +280,9 @@ public class ClubDetailsInfo extends Fragment {
 
     public  void  putMarker(float lat, float lon){
         LatLng sydney = new LatLng( lat, lon  );
-        googleMap.addMarker(new MarkerOptions().position(sydney).title(""));
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
+        googleMap.addMarker(new MarkerOptions().position(sydney));
+//        CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
+//        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
     }
 

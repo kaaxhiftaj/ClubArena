@@ -78,7 +78,6 @@ public class RegisterFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-
         Typeface custom_font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Raleway_ExtraBold.ttf");
         tv_signin.setTypeface(custom_font);
 

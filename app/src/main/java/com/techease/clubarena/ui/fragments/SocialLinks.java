@@ -1,17 +1,17 @@
 package com.techease.clubarena.ui.fragments;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.os.Binder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -23,95 +23,111 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.techease.clubarena.R;
-import com.techease.clubarena.models.ClubDetailsPhotoModel;
-import com.techease.clubarena.models.ClubDetailsVideoModel;
-import com.techease.clubarena.ui.adapters.ClubDetailsPhotoAdapter;
-import com.techease.clubarena.ui.adapters.ClubDetailsVideoAdapter;
 import com.techease.clubarena.utils.AlertsUtils;
 import com.techease.clubarena.utils.Configuration;
-import com.techease.clubarena.utils.InternetUtils;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import io.reactivex.observers.TestObserver;
 
-public class ClubDetailVideos extends Fragment {
 
-    RecyclerView rv_video ;
-    Binder unbinder ;
-    List<ClubDetailsVideoModel> video_list;
-    ClubDetailsVideoAdapter videoAdapter;
+public class SocialLinks extends Fragment {
+
+    ImageButton Fb,Tw,instagram,Mail;
+    String getId,Face,Tweet,insta, web;
+    WebView webiew;
     String club_id ;
+    Unbinder unbinder;
     android.support.v7.app.AlertDialog alertDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v =  inflater.inflate(R.layout.fragment_club_detail_videos, container, false);
-       rv_video = (RecyclerView)v.findViewById(R.id.video_recycler);
+        View v = inflater.inflate(R.layout.fragment_social_links, container, false);
+
         club_id =getArguments().getString("club_id");
 
-        if(InternetUtils.isNetworkConnected(getActivity()))
-        {
+        apicall();
 
-            rv_video.setLayoutManager(new LinearLayoutManager(getActivity()));
-            video_list = new ArrayList<>();
-            apicall();
-            if (alertDialog == null)
-                alertDialog = AlertsUtils.createProgressDialog(getActivity());
-            alertDialog.show();
-            videoAdapter = new ClubDetailsVideoAdapter(getActivity(), video_list);
-            rv_video.setAdapter(videoAdapter);
+        Toast.makeText(getActivity(), club_id, Toast.LENGTH_SHORT).show();
+        Fb=(ImageButton)v.findViewById(R.id.btnfb);
+        Tw=(ImageButton)v.findViewById(R.id.btnTw);
+        instagram =(ImageButton)v.findViewById(R.id.btnInsta);
+        Mail=(ImageButton)v.findViewById(R.id.btnMail);
+        webiew=(WebView)v.findViewById(R.id.wv);
 
-        }
-        else
-        {
-            Toast.makeText(getActivity(),"No Internet Connection",Toast.LENGTH_SHORT).show();
-        }
 
-        return  v ;
+        Fb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                webiew.getSettings().setJavaScriptEnabled(true);
+                webiew.getSettings().setPluginState(WebSettings.PluginState.ON);
+                webiew.loadUrl(Face);
+                webiew.setWebChromeClient(new WebChromeClient());
+            }
+        });
+        Tw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                webiew.getSettings().setJavaScriptEnabled(true);
+                webiew.getSettings().setPluginState(WebSettings.PluginState.ON);
+                webiew.loadUrl(Tweet);
+                webiew.setWebChromeClient(new WebChromeClient());
+            }
+        });
+
+        instagram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                webiew.getSettings().setJavaScriptEnabled(true);
+                webiew.getSettings().setPluginState(WebSettings.PluginState.ON);
+                webiew.loadUrl(insta);
+                webiew.setWebChromeClient(new WebChromeClient());
+            }
+        });
+
+        Mail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                webiew.getSettings().setJavaScriptEnabled(true);
+                webiew.getSettings().setPluginState(WebSettings.PluginState.ON);
+                webiew.loadUrl(web);
+                webiew.setWebChromeClient(new WebChromeClient());
+            }
+        });
+
+        return v;
     }
 
-
-
-    private void apicall() {
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Configuration.USER_URL+"App/clubvideos"
+    public void apicall() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Configuration.USER_URL+"App/sociallinks"
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
                 if (response.contains("true")) {
                     try {
-                        if (alertDialog != null)
-                            alertDialog.dismiss();
-
                         JSONObject jsonObject=new JSONObject(response);
-                        JSONArray jsonArr=jsonObject.getJSONArray("videos");
-                        for (int i=0; i<jsonArr.length(); i++)
-                        {
-                            JSONObject temp = jsonArr.getJSONObject(i);
-                            ClubDetailsVideoModel videoModel=new ClubDetailsVideoModel();
+                        JSONObject jsonObj=jsonObject.getJSONObject("bar");
 
-                            videoModel.setId(temp.getString("id"));
-                            videoModel.setTitle(temp.getString("title"));
-                            video_list.add(videoModel);
+                        Toast.makeText(getActivity(), "Done", Toast.LENGTH_SHORT).show();
+                        Face=jsonObj.getString("facebook");
+                        Tweet=jsonObj.getString("twitter");
+                        insta=jsonObj.getString("instagram");
+                        web = jsonObj.getString("website");
 
-                        }
-                        videoAdapter.notifyDataSetChanged();
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                         if (alertDialog != null)
                             alertDialog.dismiss();
-
                     }
 
 
@@ -160,6 +176,5 @@ public class ClubDetailVideos extends Fragment {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         mRequestQueue.add(stringRequest);
     }
-
 
 }

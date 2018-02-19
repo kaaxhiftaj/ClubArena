@@ -99,6 +99,7 @@ public class ClubDetails extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText("INFO"));
         tabLayout.addTab(tabLayout.newTab().setText("PHOTOS"));
         tabLayout.addTab(tabLayout.newTab().setText("VIDEOS"));
+        tabLayout.addTab(tabLayout.newTab().setText("SOCIAL"));
         viewPager.setAdapter(new PagerAdapter(((FragmentActivity)getActivity()).getSupportFragmentManager(), tabLayout.getTabCount()));
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
@@ -154,7 +155,7 @@ public class ClubDetails extends Fragment {
         iv_web.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri uri = Uri.parse("http://www.google.com"); // missing 'http://' will cause crashed
+                Uri uri = Uri.parse(website); // missing 'http://' will cause crashed
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
             }
@@ -235,6 +236,13 @@ public class ClubDetails extends Fragment {
                     bundl2.putString("club_id", club_id );
                     frag2.setArguments(bundl2);
                     return frag2;
+
+                case 3:
+                    SocialLinks frag3 = new SocialLinks();
+                    Bundle bundl3 = new Bundle();
+                    bundl3.putString("club_id", club_id );
+                    frag3.setArguments(bundl3);
+                    return frag3;
 
                 default:
                     return null;
